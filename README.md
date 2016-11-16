@@ -10,7 +10,7 @@ python manage.py migrate    # initialize the django sqlite database
 npm install    # install javascript dependencies
 ```
 
-Build and run a dev server:
+Build, run a dev server:
 ```
 python manage.py runserver         # start a django dev server on port 8000
 
@@ -21,7 +21,7 @@ npm run watch    # dev. auto-build on code change
 open http://localhost:8000/hello 
 ```
 
-For hot-reloading during development run:
+For hot-reloading during development:
 ```
 python manage.py runserver         # start a django dev server on port 8000
 npm run server                     # start a dev server with hot-reloading on port 3000
