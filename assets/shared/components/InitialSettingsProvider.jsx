@@ -2,69 +2,67 @@ import React from 'react'
 
 
 class InitialSettingsProvider extends React.Component {
+  constructor(props) {
+    super(props)
 
-    constructor(props) {
-        super(props)
+    this.state = {
+      initialized: false,
+      error: null,
+    }
+  }
 
-        this.state = {
-            initialized: false,
-            error: null
-        }
+  componentWillMount() {
+    // check if initialSettings already embedded in page
+    if (window.initialJSON) {
+      this.initialSettings = window.initialJSON
+      this.setState({
+        initialized: true,
+      })
+      return
     }
 
-    componentDidMount() {
-        // check if initialSettings already embedded in page
-        if(window.initialJSON) {
-            this.initialSettings = window.initialJSON;
-            this.setState({initialized: true})
-            return
-        }
-
-        // retrieve initialSettings from server since they weren't embedded in the page
-        this.initialSettings = {};
-        if(!window.initialUrl) {
-            this.setState({initialized: true})
-            return
-        }
-
-        fetch(window.initialUrl, {credentials: 'include'})
-            .then((response) => {
-                if (response.ok) {
-                    return response.json()
-                } else {
-                    throw `${window.initialUrl}  ${response.statusText} (${response.status})`
-                }
-            })
-            .then((responseJSON) => {
-                console.log("initialSettings = ", responseJSON)
-                for (var k in responseJSON) {
-                    this.initialSettings[k] = responseJSON[k]
-                }
-                this.setState({initialized: true})
-            })
-            .catch((exception) => {
-                this.setState({error: exception})
-            })
+    // retrieve initialSettings from server since they weren't embedded in the page
+    this.initialSettings = {}
+    if (!window.initialUrl) {
+      this.setState({ initialized: true })
+      return
     }
 
-    render() {
-        if(this.state.initialized) {
-            return React.cloneElement(this.props.children, {
-                initialSettings: this.initialSettings
-            })
-
-        } else {
-            if(!this.state.error) {
-                return <div style={{padding:"100px", width:"100%"}}><center>Loading ... </center></div>
-            } else {
-                return <div>ERROR: {this.state.error}</div>
-            }
+    fetch(window.initialUrl, { credentials: 'include' })
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
         }
+        throw new Error(`${window.initialUrl}  ${response.statusText} (${response.status})`)
+      })
+      .then((responseJSON) => {
+        console.log('initialSettings = ', responseJSON)
+        this.initialSettings = responseJSON
+        this.setState({ initialized: true })
+      })
+      .catch((exception) => {
+        this.setState({ error: exception })
+      })
+  }
+
+  render() {
+    if (this.state.initialized) {
+      return React.cloneElement(this.props.children, {
+        initialSettings: this.initialSettings,
+      })
     }
+
+    if (!this.state.error) {
+      return <div style={{ padding: '100px', width: '100%' }}><center>Loading ...</center></div>
+    }
+
+    return <div>ERROR: {this.state.error}</div>
+  }
 }
 
+
 InitialSettingsProvider.propTypes = {
-    children: React.PropTypes.element.isRequired  //require 1 child component
+  children: React.PropTypes.element.isRequired,  //require 1 child component
 }
 
 export default InitialSettingsProvider
