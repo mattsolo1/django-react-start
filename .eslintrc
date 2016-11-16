@@ -21,7 +21,8 @@
     "no-plusplus": 0,
     // "no-multiple-empty-lines": 0,
     // "generator-star-spacing": [2, {"before": false, "after": true}],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/prefer-stateless-function": 0
   },
   "parserOptions": {
     "ecmaFeatures": {
