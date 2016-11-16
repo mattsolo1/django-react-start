@@ -11,7 +11,7 @@ Reasons to use server-side django templates instead of putting all logic in the 
 
 
 def hello_page(request):
-    initial_json = json.loads(api.hello_page_data(request).content)
+    initial_json = json.loads(api.hello_page_data(request).content.decode('UTF-8'))
     initial_json_str = json.dumps(initial_json, sort_keys=True, indent=4)
 
     return render(request, 'react_template.html', context={
