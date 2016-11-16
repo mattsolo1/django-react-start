@@ -27,8 +27,10 @@ python manage.py runserver         # start a django dev server on port 8000
 npm run server                     # start a dev server with hot-reloading on port 3000
 
 # open the site by directly opening the static html file. The client-side code will use ajax to retrieve the initial bundle.
-# The webpack server here is running on port 3000, but it proxies ajax requests to the python server on port 8000 (see server.js)
 open http://localhost:3000/assets/bundles/hello.html  
+
+# NOTE: the webpack server here is running on port 3000, but it proxies ajax requests to the python server on port 8000 (see server.js)
+
 ```
 
 -------
