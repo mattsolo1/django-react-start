@@ -1,3 +1,4 @@
+/* eslint-disable  */
 /*eslint no-undef: "error"*/
 
 var path = require('path')
